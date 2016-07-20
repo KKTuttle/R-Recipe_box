@@ -6,7 +6,7 @@
       <% if @recipes.any?() %>
         <ul>
           <% @recipes.each() do |recipe| %>
-            <li><%= recipe.name() %></li>
+            <li><a href ='/recipe/<%= recipe.id %>'><%= recipe.name() %></a></li>
           <%end%>
         </ul>
       <% else %>

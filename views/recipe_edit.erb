@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h1><%= @recipe.name %></h1>
+    <h2>Ingredients</h2>
+      <% if @recipe.ingredients.any?() %>
+
+        <ul>
+          <% @recipe.ingredients.each() do |ingredient| %>
+
+            <li><%= ingredient.name() %></li>
+          <%end%>
+        </ul>
+      <% else %>
+          <p> There are no ingredients yet! </p>
+      <% end %>
+
+    <h2>Instructions</h2>
+      <p><%= @recipe.instructions() %></p>
+  </div>
+<!-- SECOND COLUMN -->
+  <div class="col-sm-6">
+    <h3>Update <%= @recipe.name %> recipe</h3>
+    <form action="/recipe/<%= @recipe.id() %>/name" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <label for="recipe_new_name">New name:</label>
+      <input id="recipe_new_name" name="recipe_new_name" type="text" class="form-control">
+      <button class="btn btn-default" type="submit">Update Name</button>
+    </form>
+
+    <h3>Update Ingredients</h3>
+    <form action="/recipe/<%= @recipe.id() %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <label for="ingredient_new_name"> Update ingredients:</label>
+      <select class="form-control" name="ingredient_add">
+        <% if @recipe.ingredients.any? %>
+        <% @recipe.ingredients.each do |ingredient| %>
+        <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+        <% end %>
+      <% end %>
+      </select>
+      <label for="ingredient_update">Edit ingredient</label>
+      <input type="text" name="ingredient_update" class="form-control">
+      <button class="btn btn-default" type="submit">Update Ingredients</button>
+    </form>
+      <hr>
+    <form action="/recipe/<%= @recipe.id() %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <label for="ingredient_new_name"> Add ingredients:</label>
+      <input id="ingredient_new_name1" name="ingredient_new_name1" type="text" class="form-control">
+      <input id="ingredient_new_name2" name="ingredient_new_name2" type="text" class="form-control">
+      <button class="btn btn-default" type="submit">Add Ingredients</button>
+    </form>
+
+    <!-- <form action="/recipe/<%= @recipe.id() %>" method="post">
+      <input name="_method" type="hidden" value="delete">
+      <a><button type="submit">Delete Ingredients</button></a>
+    </form> -->
+
+    <h3>Update instructions</h3>
+    <form action="/recipe/<%= @recipe.id() %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <label for="instruction_new_name">New your instructions</label>
+      <input id="instruction_new_name" name="recipe_new_instructions" type="text" class="form-control">
+      <button class="btn btn-default" type="submit">Update instructions</button>
+    </form>
+
+    <form action="/recipe/<%= @recipe.id() %>" method="post">
+      <input name="_method" type="hidden" value="delete">
+      <button class="btn btn-danger" type="submit">Delete Recipe</button>
+    </form>
+  </div>
+</div>

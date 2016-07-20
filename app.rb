@@ -29,3 +29,20 @@ post('/recipes/new') do
   @recipes = Recipe.all()
   erb(:index)
 end
+
+get('/recipe/:id') do
+  @recipe = Recipe.find(params.fetch('id').to_i())
+  erb(:recipe)
+end
+
+get('/recipe/:id/edit') do
+  @recipe = Recipe.find(params.fetch('id').to_i())
+  erb(:recipe_edit)
+end
+
+patch('/recipe/:id/name') do
+  name = params.fetch('recipe_new_name')
+  @recipe = Recipe.find(params.fetch('id').to_i)
+  @recipe.update({:name => name})
+  redirect to("/recipe/#{@recipe.id}/edit")
+end

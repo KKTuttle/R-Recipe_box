@@ -1,0 +1,19 @@
+<h1><%= @recipe.name %></h1>
+<a href="/recipe/<%= @recipe.id%>/edit">Edit</a>
+
+
+<h2>Ingredients</h2>
+  <% if @recipe.ingredients.any?() %>
+
+    <ul>
+      <% @recipe.ingredients.each() do |ingredient| %>
+
+        <li><%= ingredient.name() %></li>
+      <%end%>
+    </ul>
+  <% else %>
+      <p> There are no ingredients yet! </p>
+  <% end %>
+
+<h2>Instructions</h2>
+  <p><%= @recipe.instructions() %></p>
