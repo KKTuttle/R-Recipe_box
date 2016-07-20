@@ -1,0 +1,20 @@
+<div class="row">
+<h1>Recipe Box</h1>
+<h3>A place for recipes with 5 ingredients or less</h3>
+  <div class="col-sm-3">
+    <h3>All Recipes</h3>
+      <% if @recipes.any?() %>
+        <ul>
+          <% @recipes.each() do |recipe| %>
+            <li><%= recipe.name() %></li>
+          <%end%>
+        </ul>
+      <% else %>
+          <p> There are no recipes yet! </p>
+      <% end %>
+
+      <a href="/recipes/new" method="get">Add Recipe</a>
+
+
+  </div>
+</div>
