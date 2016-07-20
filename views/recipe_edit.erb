@@ -31,7 +31,8 @@
     <form action="/recipe/<%= @recipe.id() %>" method="post">
       <input name="_method" type="hidden" value="patch">
       <label for="ingredient_new_name"> Update ingredients:</label>
-      <select class="form-control" name="ingredient_add">
+      <input type="hidden" name="recipe_id" value="">
+      <select class="form-control" name="ingredient_new_name">
         <% if @recipe.ingredients.any? %>
         <% @recipe.ingredients.each do |ingredient| %>
         <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
@@ -57,10 +58,10 @@
     </form> -->
 
     <h3>Update instructions</h3>
-    <form action="/recipe/<%= @recipe.id() %>" method="post">
+    <form action="/recipe/<%= @recipe.id() %>/instructions" method="post">
       <input name="_method" type="hidden" value="patch">
       <label for="instruction_new_name">New your instructions</label>
-      <input id="instruction_new_name" name="recipe_new_instructions" type="text" class="form-control">
+      <input id="instruction_new_name" name="instruction_new_name" type="text" class="form-control">
       <button class="btn btn-default" type="submit">Update instructions</button>
     </form>
 
@@ -70,3 +71,5 @@
     </form>
   </div>
 </div>
+
+<a href="/">Home</a>

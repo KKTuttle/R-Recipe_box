@@ -7,9 +7,10 @@
 
     <ul>
       <% @recipe.ingredients.each() do |ingredient| %>
-
-        <li><%= ingredient.name() %></li>
-      <%end%>
+        <% if (ingredient != nil) %>
+          <li><%= ingredient.name() %></li>
+        <%end%>
+      <%end%>  
     </ul>
   <% else %>
       <p> There are no ingredients yet! </p>
@@ -17,3 +18,5 @@
 
 <h2>Instructions</h2>
   <p><%= @recipe.instructions() %></p>
+
+<a href="/">Home</a>

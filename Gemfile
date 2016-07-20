@@ -6,9 +6,9 @@ gem("rake")
 gem("pg")
 gem("sinatra")
 gem('launchy')
+gem("pry")
 
 group(:test) do
   gem("rspec")
   gem("capybara")
-  gem("pry")
 end
