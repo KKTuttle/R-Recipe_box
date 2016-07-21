@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <h1><%= @recipe.name %></h1>
     <h2>Ingredients</h2>
       <% if @recipe.ingredients.any?() %>
@@ -16,9 +16,61 @@
 
     <h2>Instructions</h2>
       <p><%= @recipe.instructions() %></p>
+
+      <% if @recipe.tags.any?() %>
+        <% @recipe.tags.each do |tag| %>
+          <p><span class="label label-warning"><%= tag.name %></span></p>
+        <% end %>
+      <% end %>
+
+  <hr>
+  </div>
+  <div class="col-sm-3">
+    <h3>Update tags</h3>
+    <!-- SELECT A POPULAR TAG -->
+    <form class="form-group" action="/recipe/<%= @recipe.id() %>/tag/select" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <label for="tag_select">Choose a popular tag</label>
+      <select class="form-control" name="tag_select">
+        <% if @tags.any? %>
+        <% @tags.each do |tag| %>
+        <option value="<%= tag.id %>"><%= tag.name %></option>
+        <% end %>
+      <% end %>
+      </select>
+      <button type="submit" class="btn btn-default">Select tag</button>
+    </form>
+
+    <hr>
+
+    <form class="form-group" action="/recipe/<%= @recipe.id() %>/tag" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <label for="tag_new">Create a New Tag</label>
+      <input class="form-control" type="text" name="tag_new">
+      <button type="submit" class="btn btn-info">Create Tag</button>
+    </form>
+
+      <hr>
+
+    <form class="form-group" action="/recipe/<%= @recipe.id() %>/tag/delete" method="post">
+      <input name="_method" type="hidden" value="delete">
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <label for="tag_delete">Remove a tag</label>
+      <select class="form-control" name="tag_delete">
+        <% if @recipe.tags.any? %>
+        <% @recipe.tags.each do |tag| %>
+        <option value="<%= tag.id %>"><%= tag.name %></option>
+        <% end %>
+      <% end %>
+      </select>
+      <button type="submit" class="btn btn-danger">Delete tag</button>
+    </form>
+
   </div>
 <!-- SECOND COLUMN -->
-  <div class="col-sm-6">
+  <div class="col-sm-3">
     <h3>Update <%= @recipe.name %> recipe</h3>
     <form action="/recipe/<%= @recipe.id() %>/name" method="post">
       <input name="_method" type="hidden" value="patch">
@@ -26,6 +78,8 @@
       <input id="recipe_new_name" name="recipe_new_name" type="text" class="form-control">
       <button class="btn btn-default" type="submit">Update Name</button>
     </form>
+
+    <hr>
 
     <h3>Update Ingredients</h3>
     <form action="/recipe/<%= @recipe.id() %>/ingredients" method="post">
@@ -56,6 +110,8 @@
       <input name="_method" type="hidden" value="delete">
       <a><button type="submit">Delete Ingredients</button></a>
     </form> -->
+
+    <hr>
 
     <h3>Update instructions</h3>
     <form action="/recipe/<%= @recipe.id() %>/instructions" method="post">

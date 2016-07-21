@@ -11,6 +11,22 @@ get('/recipes/new') do
   @recipes = Recipe.all()
   erb(:recipe_form)
 end
+# CHOOSE FROM DROPDOWN TAGS
+patch('/recipe/:id/tag/select') do
+  recipe_id = params.fetch('recipe_id')
+  @recipe = Recipe.find(recipe_id)
+  tag = Tag.find(params.fetch("tag_select"))
+  @recipe.tags.push(tag)
+  redirect to("/recipe/#{@recipe.id}/edit")
+end
+
+# ADD A NEW TAG
+patch('/recipe/:id/tag') do
+  @recipe = Recipe.find(params.fetch('recipe_id'))
+  tag_name = params.fetch('tag_new')
+  @recipe.tags.create({:name => tag_name})
+  redirect to("/recipe/#{@recipe.id}/edit")
+end
 
 post('/recipes/new') do
   name = params.fetch('name')
@@ -37,6 +53,7 @@ end
 
 get('/recipe/:id/edit') do
   @recipe = Recipe.find(params.fetch('id').to_i())
+  @tags = Tag.all
   erb(:recipe_edit)
 end
 
@@ -79,6 +96,18 @@ post('/recipe/:id/edit') do
   @recipe.ingredients.create({:name => ingredient2})
   redirect to("/recipe/#{@recipe.id}/edit")
 end
+
+
+delete('/recipe/:id/tag/delete') do
+  recipe_id = params.fetch('recipe_id')
+  @recipe = Recipe.find(recipe_id)
+  tag_id = params.fetch('tag_delete')
+  tag = Tag.find(tag_id)
+  tag.destroy()
+  redirect to("/recipe/#{@recipe.id}/edit")
+end
+
+
 
 get("/clear") do
   Recipe.all().each() do |recipe|
