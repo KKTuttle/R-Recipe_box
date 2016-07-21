@@ -9,12 +9,12 @@ end
 
 # SEARCHING BY INGREDIENT
 get('/search') do
-  input = params.fetch('ingredient_search')
-  ingredient = Ingredient.find_name(input)
+  name = params.fetch('ingredient_search')
+  ingredient = Ingredient.find_by({:name => name})
   @recipe_results = ingredient.recipes()
-  redirect to("/")
+  @recipes = Recipe.all()
+  erb(:index)
 end
-
 
 # ADDING A RECIPE
 get('/recipes/new') do
@@ -55,11 +55,16 @@ post('/recipes/new') do
   ingredient_5 = params.fetch('ingredient_5')
   instructions = params.fetch('instructions')
   recipe = Recipe.create({:name => name, :rating => 0, :instructions => instructions})
-  recipe.ingredients.create({:name => ingredient_1})
-  recipe.ingredients.create({:name => ingredient_2})
-  recipe.ingredients.create({:name => ingredient_3})
-  recipe.ingredients.create({:name => ingredient_4})
-  recipe.ingredients.create({:name => ingredient_5})
+  @ingred1 = Ingredient.find_or_create_by({:name => ingredient_1})
+  @ingred2 = Ingredient.find_or_create_by({:name => ingredient_2})
+  @ingred3 = Ingredient.find_or_create_by({:name => ingredient_3})
+  @ingred4 = Ingredient.find_or_create_by({:name => ingredient_4})
+  @ingred5 = Ingredient.find_or_create_by({:name => ingredient_5})
+  recipe.ingredients.push(@ingred1)
+  recipe.ingredients.push(@ingred2)
+  recipe.ingredients.push(@ingred3)
+  recipe.ingredients.push(@ingred4)
+  recipe.ingredients.push(@ingred5)
   @recipes = Recipe.all()
   erb(:index)
 end

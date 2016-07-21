@@ -1,5 +1,5 @@
 <div class="row">
-<h3>A place for recipes with 5 ingredients or less</h3>
+<!-- <h3>A place for recipes with 5 ingredients or less</h3> -->
   <div class="col-sm-3">
     <h3>All Recipes</h3>
       <% if @recipes.any?() %>
@@ -21,19 +21,20 @@
     <form class="form-group" action="/search" method="get">
       <input class="form-control" type="text" name="ingredient_search">
       <button type="submit" class="btn btn-default">Search</button>
+      <hr>
     </form>
     <% if @recipe_results %>
       <% @recipe_results.each do |recipe|%>
-        <h2><a href="recipe/<%= recipe.id %>"> recipe.name </h2>
-        <% (recipe.rating).times do %>
-          <span class="glyphicon glyphicon-star"></span>
+        <h3><a href="recipe/<%= recipe.id %>"><%= recipe.name() %></a></h3>
+          <% (recipe.rating).times do %>
+            <span class="glyphicon glyphicon-star"></span>
+          <% end %>
+          <% recipe.tags.each do |tag| %>
+            <p><span class="label label-warning"><%= tag.name %></span></p>
+          <% end %>
+          <hr>
         <% end %>
-        <% recipe.tags.each do |tag| %>
-          <p><span class="label label-warning"><%= tag.name %></span></p>
-        <% end %>
-      <% end %>
     <% end %>
-
 
   </div>
 </div>
