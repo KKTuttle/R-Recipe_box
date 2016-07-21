@@ -61,16 +61,24 @@ delete('/recipe/:id') do
 end
 
 patch('/recipe/:id/ingredients') do
-  ingredient_id = params.fetch('ingredient_new_name').to_i
-  recipe_id = params.fetch()
-  ingredient = Ingredient.find(id)
-  binding.pry
+  ingredient_id = params.fetch('ingredient_name').to_i
+  recipe_id = params.fetch('recipe_id').to_i
+  ingredient = Ingredient.find(ingredient_id)
+  @recipe = Recipe.find(recipe_id)
   name = params.fetch('ingredient_update')
   ingredient.update({:name => name})
   redirect to("/recipe/#{@recipe.id}/edit")
 end
 
-
+post('/recipe/:id/edit') do
+  ingredient1 = params.fetch("ingredient_add1")
+  ingredient2 = params.fetch("ingredient_add2")
+  recipe_id = params.fetch('recipe_id').to_i
+  @recipe = Recipe.find(recipe_id)
+  @recipe.ingredients.create({:name => ingredient1})
+  @recipe.ingredients.create({:name => ingredient2})
+  redirect to("/recipe/#{@recipe.id}/edit")
+end
 
 get("/clear") do
   Recipe.all().each() do |recipe|

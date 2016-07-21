@@ -28,11 +28,11 @@
     </form>
 
     <h3>Update Ingredients</h3>
-    <form action="/recipe/<%= @recipe.id() %>" method="post">
+    <form action="/recipe/<%= @recipe.id() %>/ingredients" method="post">
       <input name="_method" type="hidden" value="patch">
-      <label for="ingredient_new_name"> Update ingredients:</label>
-      <input type="hidden" name="recipe_id" value="">
-      <select class="form-control" name="ingredient_new_name">
+      <label for="ingredient_name"> Update ingredients:</label>
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <select class="form-control" name="ingredient_name">
         <% if @recipe.ingredients.any? %>
         <% @recipe.ingredients.each do |ingredient| %>
         <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
@@ -44,11 +44,11 @@
       <button class="btn btn-default" type="submit">Update Ingredients</button>
     </form>
       <hr>
-    <form action="/recipe/<%= @recipe.id() %>" method="post">
-      <input name="_method" type="hidden" value="patch">
-      <label for="ingredient_new_name"> Add ingredients:</label>
-      <input id="ingredient_new_name1" name="ingredient_new_name1" type="text" class="form-control">
-      <input id="ingredient_new_name2" name="ingredient_new_name2" type="text" class="form-control">
+    <form action="/recipe/<%= @recipe.id() %>/edit" method="post">
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <label for="ingredient_add"> Add ingredients:</label>
+      <input id="ingredient_add1" name="ingredient_add1" type="text" class="form-control">
+      <input id="ingredient_add2" name="ingredient_add2" type="text" class="form-control">
       <button class="btn btn-default" type="submit">Add Ingredients</button>
     </form>
 
@@ -62,7 +62,7 @@
       <input name="_method" type="hidden" value="patch">
       <label for="instruction_new_name">New your instructions</label>
       <input id="instruction_new_name" name="instruction_new_name" type="text" class="form-control">
-      <button class="btn btn-default" type="submit">Update instructions</button>
+      <button class="btn btn-default" type="submit">Update Instructions</button>
     </form>
 
     <form action="/recipe/<%= @recipe.id() %>" method="post">

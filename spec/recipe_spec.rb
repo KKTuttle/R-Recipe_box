@@ -16,4 +16,6 @@ describe(Recipe) do
     expect(recipe.save).to(eq(false))
   end
 
+  # it {should have_many(:ingredients)}
+
 end
