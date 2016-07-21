@@ -12,3 +12,11 @@ label {
 .col-sm-3 {
   margin-left: 20px;
 }
+
+a {
+  font-size: 1em;
+}
+
+.glyphicon {
+  color: #ffcc66;
+}

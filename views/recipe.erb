@@ -1,22 +1,46 @@
-<h1><%= @recipe.name %></h1>
-<a href="/recipe/<%= @recipe.id%>/edit">Edit</a>
+<div class="col-sm-6">
+  <hr>
+  <h1><%= @recipe.name %></h1>
+  <% if @recipe.rating > 0 %>
 
-
-<h2>Ingredients</h2>
-  <% if @recipe.ingredients.any?() %>
-
-    <ul>
-      <% @recipe.ingredients.each() do |ingredient| %>
-        <% if (ingredient != nil) %>
-          <li><%= ingredient.name() %></li>
-        <%end%>
-      <%end%>  
-    </ul>
-  <% else %>
-      <p> There are no ingredients yet! </p>
+    <% (@recipe.rating).times do %>
+    <span class="glyphicon glyphicon-star"></span>
+    <% end %>
   <% end %>
+  <br>
 
-<h2>Instructions</h2>
-  <p><%= @recipe.instructions() %></p>
+  <h2>Ingredients</h2>
+    <% if @recipe.ingredients.any?() %>
 
-<a href="/">Home</a>
+      <ul>
+        <% @recipe.ingredients.each() do |ingredient| %>
+          <% if (ingredient != nil) %>
+            <li><%= ingredient.name() %></li>
+          <%end%>
+        <%end%>
+      </ul>
+    <% else %>
+        <p> There are no ingredients yet! </p>
+    <% end %>
+
+  <h2>Instructions</h2>
+    <p><%= @recipe.instructions() %></p>
+
+    <form class="form-group" action="/recipe/<%= @recipe.id %>" method="post">
+      <input name="_method" type="hidden" value="patch">
+      <input type="hidden" name="recipe_id" value="<%= @recipe.id() %>">
+      <select class="form-control" name="rating_select">
+        <option value="5">5 stars: Holy moly! Making it again tomorrow</option>
+        <option value="4">4 stars: Really good</option>
+        <option value="3">3 stars: Nothing to write home about</option>
+        <option value="2">2 stars: Needs improvement</option>
+        <option value="1">1 star: Terrible!</option>
+      </select>
+      <button class="btn btn-default" type="submit">Update rating</button>
+    </form>
+<hr>
+    <a href="/recipe/<%= @recipe.id%>/edit">| Edit Recipe | </a>
+
+
+  <a href="/">Home  |</a>
+</div>

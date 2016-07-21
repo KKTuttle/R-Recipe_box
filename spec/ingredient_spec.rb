@@ -9,5 +9,11 @@ describe(Ingredient) do
     ingredient = Ingredient.new({:name => ''})
     expect(ingredient.save).to(eq(false))
   end
-  
+
+  describe('.find_name') do
+    it "finds an ingredient by name and returns an id" do
+      ingredient = Ingredient.new({:name => 'onion'})
+      expect(Ingredient.find_name("onion")).to(eq(ingredient))
+    end
+  end
 end

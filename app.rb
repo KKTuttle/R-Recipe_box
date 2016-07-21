@@ -7,11 +7,21 @@ get('/') do
   erb(:index)
 end
 
+# SEARCHING BY INGREDIENT
+get('/search') do
+  input = params.fetch('ingredient_search')
+  ingredient = Ingredient.find_name(input)
+  @recipe_results = ingredient.recipes()
+  redirect to("/")
+end
+
+
+# ADDING A RECIPE
 get('/recipes/new') do
   @recipes = Recipe.all()
   erb(:recipe_form)
 end
-# CHOOSE FROM DROPDOWN TAGS
+# ADD TAGS => CHOOSE FROM DROPDOWN TAGS
 patch('/recipe/:id/tag/select') do
   recipe_id = params.fetch('recipe_id')
   @recipe = Recipe.find(recipe_id)
@@ -20,12 +30,20 @@ patch('/recipe/:id/tag/select') do
   redirect to("/recipe/#{@recipe.id}/edit")
 end
 
-# ADD A NEW TAG
+# ADD A NEW TAG => CUSTOM
 patch('/recipe/:id/tag') do
   @recipe = Recipe.find(params.fetch('recipe_id'))
   tag_name = params.fetch('tag_new')
   @recipe.tags.create({:name => tag_name})
   redirect to("/recipe/#{@recipe.id}/edit")
+end
+
+# ADD A RATING
+patch('/recipe/:id') do
+  @recipe = Recipe.find(params.fetch('recipe_id'))
+  rating = (params.fetch('rating_select')).to_i
+  @recipe.update({:rating => rating})
+  redirect to ("/recipe/#{@recipe.id}")
 end
 
 post('/recipes/new') do
@@ -48,6 +66,7 @@ end
 
 get('/recipe/:id') do
   @recipe = Recipe.find(params.fetch('id').to_i())
+  @stars = @recipe.rating
   erb(:recipe)
 end
 
